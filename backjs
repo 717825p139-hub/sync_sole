@@ -1,0 +1,209 @@
+(function () {
+    emailjs.init("f1JhtpwLyEqcWoE-1");
+})();
+
+window.onload = function () {
+    startMatrix();
+};
+
+function hideAll() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("registerBox").style.display = "none";
+    document.getElementById("forgotBox").style.display = "none";
+}
+
+function showRegister() {
+    hideAll();
+    document.getElementById("registerBox").style.display = "block";
+}
+
+function showLogin() {
+    hideAll();
+    document.getElementById("loginBox").style.display = "block";
+}
+
+function showForgot() {
+    hideAll();
+    document.getElementById("forgotBox").style.display = "block";
+}
+
+function generateOTP() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function hashPassword(password) {
+    return btoa(password); // basic encoding
+}
+
+function register() {
+    var username = regUser.value.trim();
+    var password = regPass.value.trim();
+    var email = regEmail.value.trim();
+    var phone = regPhone.value.trim();
+
+    var gender = reggender.value.trim();
+    var dob = regdob.value.trim();
+    var cast = regcast.value.trim();
+    var salary = regsalary.value.trim();
+    var fname = regfname.value.trim();
+    var mname = regmname.value.trim();
+    var bio = regbio.value.trim();
+
+    if (!username || !password || !email || !phone) {
+        alert("Please fill all required fields");
+        return;
+    }
+
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters!");
+        return;
+    }
+
+    if (!email.includes("@")) {
+        alert("Invalid email!");
+        return;
+    }
+
+    if (phone.length < 10) {
+        alert("Invalid phone number!");
+        return;
+    }
+
+    if (localStorage.getItem(username)) {
+        alert("User already exists!");
+        return;
+    }
+
+    var otp = generateOTP();
+
+    sessionStorage.setItem("otp", otp);
+    sessionStorage.setItem("tempUser", JSON.stringify({
+        username,
+        password: hashPassword(password),
+        email,
+        phone,
+        gender,
+        dob,
+        cast,
+        salary,
+        fname,
+        mname,
+        bio
+    }));
+
+    emailjs.send("service_rxlq9zm", "template_s4p4mx9", {
+        to_email: email,
+        otp: otp
+    })
+        .then(function () {
+            alert("OTP sent to your email!");
+            otpSection.style.display = "block";
+            otpInput.focus();
+        })
+        .catch(function (error) {
+            alert("Error sending OTP");
+            console.error(error);
+        });
+}
+
+function verifyOTP() {
+    var enteredOTP = otpInput.value.trim();
+    var storedOTP = sessionStorage.getItem("otp");
+
+    if (enteredOTP === storedOTP) {
+        var tempUser = JSON.parse(sessionStorage.getItem("tempUser"));
+
+        localStorage.setItem(tempUser.username, JSON.stringify(tempUser));
+
+        sessionStorage.clear();
+        alert("Registration successful!");
+        showLogin();
+    } else {
+        alert("Invalid OTP!");
+    }
+}
+
+function login() {
+    var username = logUser.value.trim();
+    var password = logPass.value.trim();
+
+    var storedUser = localStorage.getItem(username);
+
+    if (!storedUser) {
+        alert("User not found!");
+        return;
+    }
+
+    var userData = JSON.parse(storedUser);
+
+    if (userData.password === hashPassword(password)) {
+        sessionStorage.setItem("loggedInUser", username);
+        alert("Login successful!");
+        window.location.href = "mainhome.html";
+    } else {
+        alert("Invalid password!");
+    }
+}
+
+function sendResetOTP() {
+    var username = forgotUser.value.trim();
+    var email = forgotEmail.value.trim();
+
+    var storedUser = localStorage.getItem(username);
+
+    if (!storedUser) {
+        alert("User not found!");
+        return;
+    }
+
+    var userData = JSON.parse(storedUser);
+
+    if (userData.email !== email) {
+        alert("Email does not match!");
+        return;
+    }
+
+    var otp = generateOTP();
+
+    sessionStorage.setItem("resetOtp", otp);
+    sessionStorage.setItem("resetUser", username);
+
+    emailjs.send("service_rxlq9zm", "template_s4p4mx9", {
+        to_email: email,
+        otp: otp
+    })
+        .then(function () {
+            alert("OTP sent to your email!");
+            forgotOtpSection.style.display = "block";
+        })
+        .catch(function () {
+            alert("Failed to send OTP");
+        });
+}
+
+function verifyResetOTP() {
+    var enteredOtp = forgotOtpInput.value.trim();
+    var newPassword = document.getElementById("newPass").value.trim();
+
+    if (newPassword.length < 6) {
+        alert("Password must be at least 6 characters!");
+        return;
+    }
+
+    var storedOtp = sessionStorage.getItem("resetOtp");
+    var username = sessionStorage.getItem("resetUser");
+
+    if (enteredOtp !== storedOtp) {
+        alert("Invalid OTP!");
+        return;
+    }
+
+    var userData = JSON.parse(localStorage.getItem(username));
+    userData.password = hashPassword(newPassword);
+
+    localStorage.setItem(username, JSON.stringify(userData));
+
+    sessionStorage.clear();
+    alert("Password reset successful!");
+    showLogin();
+}
