@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>haome pagr</title>
+    <link rel="stylesheet" href="backcss.css">
+</head>
+
+<body>
+    <div class="header">
+        <h2></h2>
+    </div>
+    <div class="profil-container">
+
+        <div class="profil-card" id="profileContainer">
+            <img src="portrait-indian-people-celebrating-baisakhi-festival.jpg">
+            <p>Name:</p>
+            <p>Age:</p>
+            <p>City:</p>
+            <p>Salary:</p>
+            <p>NetWorth:</p>
+            <button onclick="window.location.href='mailto:pranavrk61@gmail.com'">
+                Contact
+            </button>
+        </div>
+
+        <div class="profil-card">
+            <img src="close-up-beautiful-girl-portrait-near-tree.jpg">
+            <p>Name:</p>
+            <p>Age:</p>
+            <p>City:</p>
+            <p>Salary:</p>
+            <p>NetWorth:</p>
+            <button onclick="window.location.href='mailto:pranavrk61@gmail.com'">
+                Contact
+            </button>
+        </div>
+
+        <div class="profil-card">
+            <img src="girl-resting-steps-with-backpack.jpg">
+            <p>Name:</p>
+            <p>Age:</p>
+            <p>City:</p>
+            <p>Salary:</p>
+            <p>NetWorth:</p>
+            <button onclick="window.location.href='mailto:pranavrk61@gmail.com'">
+                Contact
+            </button>
+        </div>
+        <div class="profil-card">
+            <img src="pexels-tomaz-barcellos-999425-1987301.jpg">
+            <p>Name:</p>
+            <p>Age:</p>
+            <p>City:</p>
+            <p>Salary:</p>
+            <p>NetWorth:</p>
+            <button onclick="window.location.href='mailto:pranavrk61@gmail.com'">
+                Contact
+            </button>
+        </div>
+        <div class="profil-card">
+            <img src="pexels-soldiervip-1391498.jpg">
+            <p>Name:</p>
+            <p>Age:</p>
+            <p>City:</p>
+            <p>Salary:</p>
+            <p>NetWorth:</p>
+            <button onclick="window.location.href='mailto:pranavrk61@gmail.com'">
+                Contact
+            </button>
+        </div>
+        <div class="profil-card">
+            <img src="pexels-joshuamckn-3290236.jpg">
+            <p>Name:</p>
+            <p>Age:</p>
+            <p>City:</p>
+            <p>Salary:</p>
+            <p>NetWorth:</p>
+            <button onclick="window.location.href='mailto:pranavrk61@gmail.com'">
+                Contact
+            </button>
+        </div>
+        <div class="profil-card">
+            <img src="pexels-minan1398-672444.jpg">
+            <p>Name:</p>
+            <p>Age:</p>
+            <p>City:</p>
+            <p>Salary:</p>
+            <p>NetWorth:</p>
+            <button onclick="window.location.href='mailto:pranavrk61@gmail.com'">
+                Contact
+            </button>
+        </div>
+        <div class="profil-card">
+            <img src="pexels-marcelodias-2010877.jpg">
+            <p>Name:</p>
+            <p>Age:</p>
+            <p>City:</p>
+            <p>Salary:</p>
+            <p>NetWorth:</p>
+            <button onclick="window.location.href='mailto:pranavrk61@gmail.com'">
+                Contact
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>
