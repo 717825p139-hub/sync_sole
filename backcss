@@ -7,7 +7,8 @@ body {
     flex-direction: column;
     font-family: Arial, sans-serif;
     background-image: url('image/Picsart_26-03-06_11-36-53-781.jpg.jpeg');
-    background-repeat:repeat;
+    background-repeat:no-repeat;
+    background-attachment: fixed;
     background-size: cover;
     z-index: 10;
 }
