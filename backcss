@@ -6,7 +6,7 @@ body {
     align-items: center;
     flex-direction: column;
     font-family: Arial, sans-serif;
-    background-image: url('image/Picsart_26-03-06_11-36-53-781.jpg.jpeg');
+    background-image: url('Picsart_26-03-06_11-36-53-781.jpg.jpeg');
     background-repeat:no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -160,6 +160,37 @@ p {
 .header h2,
 .header p {
     margin-top: 0;
+}
+.btn-primary {
+  cursor: pointer;
+  background-color: rgba(255, 20, 145, 0.591);
+  border: 0;
+  color: red;
+  font-size: 30px;
+  padding: 20px;
+  width: 400px;
+  height: 100px;
+  border-radius: 300px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin-top: 50px;
+  transition: 0.66s;
+}
+.btn-primary:hover {
+  background-color: rgba(255, 20, 145, 0.591);
+  padding: 22px 22px 22px;
+  width: 405px;
+  height: 105px;
+  color: rgb(255, 0, 0);
+  font-size: 31px;
+
+  box-shadow: 5px 5px 50px #ff4d6d;
+  transform: translateY(2px);
+}
+.container {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 @media (max-width: 768px) {
