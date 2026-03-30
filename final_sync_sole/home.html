@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>SYNC SOUL - Home</title>
+    <link rel="stylesheet" href="backcss.css">
+</head>
+
+<body>
+    <script>
+        var currentUser = sessionStorage.getItem("loggedInUser");
+        if (!currentUser) {
+            window.location.href = "login.html";
+        }
+    </script>
+    <div class="topbar">
+        <h2>💕 SYNC SOUL</h2>
+        <div>
+            <span id="welcomeMsg"></span>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="profil-container" id="profileContainer">
+    </div>
+
+    <script src="backjs.js"></script>
+    <script>
+        document.getElementById("welcomeMsg").textContent = "Welcome, " + currentUser + "!";
+
+        /* BUG FIX: sanitize user-supplied strings to prevent XSS in profile cards */
+        function sanitize(str) {
+            if (!str) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function calculateAge(dob) {
+            if (!dob) return "N/A";
+            var diff = Date.now() - new Date(dob).getTime();
+            return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+        }
+        function renderProfiles() {
+            var container = document.getElementById("profileContainer");
+            var profiles = [];
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                try {
+                    var user = JSON.parse(localStorage.getItem(key));
+                    if (user && user.username && user.email) {
+                        profiles.push(user);
+                    }
+                } catch (e) {}
+            }
+            if (profiles.length === 0) {
+                container.innerHTML = '<p class="no-profiles">No profiles registered yet. Be the first!</p>';
+                return;
+            }
+            container.innerHTML = profiles.map(function(user) {
+                var age = calculateAge(user.dob);
+                var displayName = sanitize((user.fname ? user.fname + " " : "") + user.username);
+                var photoSrc = user.photo && user.photo.startsWith("data:image")
+                    ? user.photo
+                    : 'https://via.placeholder.com/260x200?text=No+Photo';
+                /* BUG FIX: sanitize all text fields rendered into HTML */
+                return '<div class="profil-card">' +
+                    '<img src="' + photoSrc + '" onerror="this.src=\'https://via.placeholder.com/260x200?text=No+Photo\'">' +
+                    '<h3>' + displayName + '</h3>' +
+                    '<p>🎂 Age: ' + age + '</p>' +
+                    '<p>⚧ Gender: ' + sanitize(user.gender || "N/A") + '</p>' +
+                    '<p>💰 Salary: ' + (user.salary ? "₹" + sanitize(user.salary) : "N/A") + '</p>' +
+                    '<p>📖 ' + sanitize(user.bio || "No bio provided") + '</p>' +
+                    '<button onclick="window.location.href=\'mailto:' + sanitize(user.email) + '\'">Contact</button>' +
+                '</div>';
+            }).join('');
+        }
+        renderProfiles();
+    </script>
+</body>
+
+</html>
